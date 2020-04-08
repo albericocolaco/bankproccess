@@ -4,6 +4,7 @@ const webpack = require('webpack')
 
 
 module.exports = function(env) {
+    console.log(env.APP_TARGET)
     var appTarget  = env.APP_TARGET || 'dev'
     return {
         plugins: [

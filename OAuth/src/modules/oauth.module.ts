@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { OAuthResponseModel } from "../model/oauth.response.model";
 import * as jwt from "jsonwebtoken";
 import HttpException from "../exceptions/http.exception";
+import { environment } from "../environments/environment";
 
 export class OAuthModule{
 
@@ -12,7 +13,7 @@ export class OAuthModule{
         } else {
             const user = this.mockUserRepository(username, password)
             if (user) {
-                var response: OAuthResponseModel = {token: jwt.sign(user, 'teste123', { expiresIn:  '1h' })}
+                var response: OAuthResponseModel = {token: jwt.sign(user, environment.privateKeyJWT, { expiresIn:  environment.jwtExpiresIn })}
                 res.send(response)
             } else {
                 next(new HttpException({code:'0002', httpCode: 403, message: 'Invalid'}))
