@@ -1,7 +1,7 @@
 import App from './app';
 import { environment } from './environments/environment';
 
-const port = Number(process.env.PORT) || 8001;
+const port = Number(process.env.PORT) || 8002;
 
 const server = new App().start(port)
     .then(port => console.log(`${environment.environment} server running on port ${port}`))

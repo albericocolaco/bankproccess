@@ -1,0 +1,17 @@
+{
+    "doc": "123456789",
+    "name": "José da Silva",
+    "birthDate": "2000-06-04",
+    "password": "123456",
+    "email": "asdfasdf@asdasdfc.com",
+    "type": "PF",
+    "phone": {
+        "areaCode": "11",
+        "phone": "999008877"
+    },
+    "smsValidate": false,
+    "emailValidate": false,
+    "fraudAnalysis": 0,
+    "creditAnalysis": 0,
+    "documentAnalysis": 0
+}

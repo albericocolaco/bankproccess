@@ -5,7 +5,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import healthcheck from 'healthcheck-middleware';
 import errorMiddleware from './middlewares/error.middleware';
-import oauthRouter from './routers/oauth.router';
+import oauthRouter from './routers/account.router';
 
 
 class App {

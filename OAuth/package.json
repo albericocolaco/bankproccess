@@ -1,7 +1,7 @@
 {
-  "name": "Accounts",
+  "name": "oauth-service",
   "version": "1.0.0",
-  "description": "Create accounts for cards",
+  "description": "Authentication users",
   "main": "index.js",
   "scripts": {
     "test": "mocha -r ts-node/register src/**/*.spec.ts",
@@ -28,6 +28,7 @@
     "healthcheck-middleware": "^1.0.1",
     "helmet": "^3.21.2",
     "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.7",
     "nodemon": "^2.0.2",
     "swagger-ui-express": "^4.1.4"
   },

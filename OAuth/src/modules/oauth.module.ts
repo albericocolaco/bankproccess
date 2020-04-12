@@ -3,6 +3,8 @@ import { OAuthResponseModel } from "../model/oauth.response.model";
 import * as jwt from "jsonwebtoken";
 import HttpException from "../exceptions/http.exception";
 import { environment } from "../environments/environment";
+import UserRepository from "../repository/user.repository";
+import { logger } from "../middlewares/logger.middleware";
 
 export class OAuthModule{
 
@@ -11,33 +13,31 @@ export class OAuthModule{
         if (!(username && password)) {
             next(new HttpException({code:'0001', httpCode: 401, message: 'Unauthorized'}))
         } else {
-            const user = this.mockUserRepository(username, password)
-            if (user) {
-                var response: OAuthResponseModel = {token: jwt.sign(user, environment.privateKeyJWT, { expiresIn:  environment.jwtExpiresIn })}
-                res.send(response)
-            } else {
-                next(new HttpException({code:'0002', httpCode: 403, message: 'Invalid'}))
-            }
+            UserRepository.getByDocument(username).then(user => {
+                console.log(user)
+                let bodyJWT = this.getBodyJWT(password, user)
+                if(bodyJWT){
+                    var response: OAuthResponseModel = {token: jwt.sign(bodyJWT, environment.privateKeyJWT, { expiresIn:  environment.jwtExpiresIn })}
+                    res.send(response);
+                } else {
+                    next(new HttpException({code:'0002', httpCode: 403, message: 'Invalid'}))
+                }
+            }).catch(err => {
+                next(new HttpException({code:'0003', httpCode: 403, message: 'Invalid'}))
+            });
         }
     }
 
 
-    private mockUserRepository(username: any, password: any) {
-        const userPass: String = username.concat(':').concat(password)
-        const correctPass: String = 'admin:123456'
-
-        switch (userPass) {
-            case correctPass: {
-                return {
-                    fullName: 'Admin da silva',
-                    firstName: 'Admin',
-                    roles: ['ADM_ACCESS'],
-                    loginDate: new Date()
-                }
+    private getBodyJWT(password: any, dbResult: any) {
+        if(password === dbResult.password){
+            return {
+                id: dbResult._id,
+                name: dbResult.name,
+                loginDate: new Date()
             }
-            default:{
-                return null;
-            }
+        } else {
+            return null;
         }
     }
 
