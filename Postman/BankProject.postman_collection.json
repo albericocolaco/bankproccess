@@ -1,0 +1,217 @@
+{
+	"info": {
+		"_postman_id": "2c265a51-d39f-c7a3-ae9b-aa59e16e1c3d",
+		"name": "BankProject",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Account - Delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{accountURL}}/api/v1/account",
+					"host": [
+						"{{accountURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account - Find Data",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{accountURL}}/api/v1/account",
+					"host": [
+						"{{accountURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account - Edit",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"newPassword\": \"qwert\", \n\t\"confirmPassword\": \"qwert\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{accountURL}}/api/v1/account/password",
+					"host": [
+						"{{accountURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"account",
+						"password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account - Create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"doc\": \"00011122236\",\n    \"name\": \"Andér mariano\",\n    \"birthDate\": \"1887-06-04\",\n    \"password\": \"123456\",\n    \"email\": \"andre@asdasdfc.com\",\n    \"phone\": {\n        \"areaCode\": \"11\",\n        \"phone\": \"88997766\"\n    }\n}"
+				},
+				"url": {
+					"raw": "{{accountURL}}/api/v1/account",
+					"host": [
+						"{{accountURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Oauth",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "397908d7-4e15-4cb4-b88f-7cbff68b89f2",
+						"exec": [
+							"var response = JSON.parse(responseBody);",
+							"setEnvironmentVariable(\"token\", response.token);",
+							"function setEnvironmentVariable(key, value){",
+							"    postman.setEnvironmentVariable(key, value);",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"00011122236\",\n\t\"password\": \"123456\"\n}"
+				},
+				"url": {
+					"raw": "{{oauthURL}}/api/v1/oauth",
+					"host": [
+						"{{oauthURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"oauth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Oauth Healthcheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{oauthURL}}/health",
+					"host": [
+						"{{oauthURL}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account Healthcheck",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{accountURL}}/health",
+					"host": [
+						"{{accountURL}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
